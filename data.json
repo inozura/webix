@@ -1,0 +1,68 @@
+[
+    { 
+         "id":1, 
+         "value":"animal",
+         "children":[ 
+             {
+                 "id":1, "value":"Make"
+             },
+             {
+                 "id":2, "value":"Cylind"
+             },
+             {
+                 "id":3, "value":"Doors"
+             },
+             {
+                "id":4, "value":"Drive"
+            },
+            {
+                "id":5, "value":"FuelS"
+            }
+         ]
+     },
+    { 
+         "id":2, 
+         "value":"automotive",
+         "children":[
+             {
+                 "id":1, "value":"Bodystyle"
+             },
+             {
+                 "id":2, "value":"Width"
+             },
+             {
+                 "id":3, "value":"Price"
+             }
+         ]
+     },
+    { 
+         "id":3, 
+         "value":"motorcycles",
+         "children":[     
+            {
+                "id":1, "value":"Make"
+            },
+            {
+                "id":2, "value":"Width"
+            },
+            {
+                "id":3, "value":"Price"
+            }
+         ]
+     },
+    { 
+         "id":4, 
+         "value":"trains",
+         "children":[
+            {
+                "id":2, "value":"Cylind"
+            },
+            {
+                "id":3, "value":"Doors"
+            },
+            {
+               "id":4, "value":"Drive"
+            }
+         ]
+     }
+ ]

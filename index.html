@@ -1,0 +1,261 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css" />
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+    <script src="./js/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/Style.css" type="text/css">
+
+</head>
+
+<body>
+    <div id='mainHeader' class='mainHeaderCss'>Create Subdata Set</div>
+    <div id='subHeader' class='subHeaderCss'>Step 1: Select row filters</div>
+
+</body>
+
+</html>
+<script>
+    // Configuration title
+    let selectTitle = "Dataset";
+    let columnTitle = "Column";
+    let filterTitle = "Filters";
+    let uniqueDataTitle = "uniqueData";
+    var mainDataset = [];
+    var dataset = [];
+    var columnset = [];
+
+    webix.ready(function () {
+        webix.ui.fullScreen();
+        $.getJSON("mockdata.json", function (data) {
+            mainDataset = data;
+            dataset = data.tables;
+            dataset = dataset.sort();
+            for (var i = 0; i < data.variables.length; i++) {
+                if (data.variables[i].table == dataset[0]) {
+                    columnset.push(data.variables[i].name);
+                }
+            }
+            if (data.variables[0].name == columnset[0] &&
+                data.variables[0].table == dataset[0] &&
+                data.variables[0].type == "Categorical") {
+                uniqueDataSet = data.variables[0].levels;
+            }
+
+            console.log("json " + columnset + uniqueDataSet);
+            renderHtml()
+        })
+        function renderHtml() {
+            webix.ui({
+                css: "col-md-12",
+                borderless: false,
+                rows: [
+                    {
+                        cols: [
+                            {
+                                view: "form", id: "formDataset", css: "col-md-2", label: "dataset",
+                                borderless: true,
+                                elements: [
+                                    {
+                                        template: selectTitle,
+                                        css: "sub-title",
+                                        borderless: true,
+                                        height: 50
+                                    },
+                                    {
+                                        width: 230,
+                                        view: "combo",
+                                        css: "marginTop",
+                                        id: "selectSubdataset",
+                                        value: dataset[0],
+                                        options: dataset
+                                    },
+                                ]
+                            },
+                            {
+                                view: "form", id: "formColumn", css: "col-md-2", label: "column",
+                                borderless: true,
+                                elements: [
+                                    {
+                                        template: columnTitle,
+                                        css: "sub-title",
+                                        borderless: true,
+                                        height: 50
+                                    },
+                                    {
+                                        width: 230,
+                                        view: "combo",
+                                        css: "marginTop",
+                                        id: "selectColumn",
+                                        value: columnset[0],
+                                        options: columnset
+                                    },
+                                    /*{
+                                        view: "button", 
+                                        value: "Add", 
+                                        width: 100,
+                                        click:addDataFun
+                                    },*/
+
+                                ]
+                            },
+                            {
+                                view: "form", id: "formUniqueData", css: "col-md-2", label: "uniqueData",
+                                borderless: true,
+                                elements: [{
+                                    template: uniqueDataTitle,
+                                    css: "sub-title",
+                                    borderless: true,
+                                    height: 50
+                                }, {
+                                    width: 230,
+                                    view: "combo",
+                                    css: "marginTop",
+                                    id: "selectUniqueData",
+                                    value: uniqueDataSet[0],
+                                    options: uniqueDataSet
+                                },]
+                            },
+                            {
+                                view: "toolbar", borderless: true, height: 300, css: "marginTopAddRemoveBtns",
+                                rows: [
+                                    {
+                                        view: "button", id: "btnAdd", value: "Button",
+                                        type: "icon", icon: "wxi-angle-double-right", width: 50, click: addvalue
+                                    },
+                                    {
+                                        view: "button", id: "btnRemove", value: "Button",
+                                        type: "icon", icon: "wxi-angle-double-left", width: 50, click: remvalue
+                                    }
+                                ]
+
+                            },
+                            {
+                                view: "form", id: "formFilters", css: "col-md-3 noBorderCss", label: "filters",
+                                borderless: false,
+                                elements: [
+                                    {
+                                        template: filterTitle,
+                                        css: "sub-title",
+                                        borderless: true,
+                                        height: 50
+                                    },
+                                    {
+                                        view: "datatable",
+                                        width: 400,
+                                        height: 300,
+                                        css: "marginTop",
+                                        select: "row",
+                                        multiselect: true,
+                                        id: "filterDatatable",
+                                        scrollX: false,
+                                        topSplit: 1,
+                                        columns: [
+                                            { id: "optype1", header: "Column", width: 200 },
+                                            { id: "optype2", header: "Data", width: 200 },
+                                        ],
+                                    }
+
+                                ]
+                            },
+
+                        ]
+
+                    },
+                    {
+                        view: "toolbar",
+                        css: "noBorderCss alignCenter marginLeftBtns",
+                        width: 700,
+                        x: 50,
+                        cols: [
+                            { view: "button", label: "Submit", id: "btnSubmit", autowidth: true, click: submitHandler },
+                            { view: "button", label: "Main Menu", id: "btnMenu", autowidth: true },
+                            {}
+                        ],
+                    }
+                ]
+            })
+
+            $$("selectSubdataset").attachEvent("onChange", function (newValue, oldValue, config) {
+                columnset = [];
+                var selectedValue = newValue;
+                console.log("globaljson = " + mainDataset);
+                for (var i = 0; i < mainDataset.variables.length; i++) {
+                    if (mainDataset.variables[i].table == selectedValue) {
+                        columnset.push(mainDataset.variables[i].name);
+                    }
+                }
+
+                for (var i = 0; i < mainDataset.variables.length; i++) {
+                    if (mainDataset.variables[i].name == columnset[0] &&
+                        mainDataset.variables[i].table == selectedValue) {
+                        uniqueDataSet = (mainDataset.variables[i].levels);
+                    }
+                }
+
+                console.log('new json ' + columnset);
+
+
+                $$("selectColumn").define("options", columnset);
+                $$("selectColumn").refresh();
+
+                $$("selectUniqueData").define("options", uniqueDataSet);
+                $$("selectUniqueData").refresh();
+            });
+
+
+            $$("selectColumn").attachEvent("onChange", function (newValue, oldValue, config) {
+                var uniqueDataSet;
+                var firstSelect = $$("selectSubdataset").getInputNode().value;
+                console.log(firstSelect);
+                var selectedValue = newValue;
+                console.log('globaljson = ' + mainDataset);
+                for (var i = 0; i < mainDataset.variables.length; i++) {
+                    if (mainDataset.variables[i].table == firstSelect &&
+                        mainDataset.variables[i].name == selectedValue) {
+                        uniqueDataSet = (mainDataset.variables[i].levels);
+                    }
+                }
+                console.log('new json ' + uniqueDataSet);
+
+                $$("selectUniqueData").define("options", uniqueDataSet);
+                $$("selectUniqueData").refresh();
+            });
+        }
+        function addvalue() {
+            var colVal = $$("selectColumn").getInputNode().value;
+            var uniqueVal = $$("selectUniqueData").getInputNode().value;
+            //alert($$("selectColumn").getInputNode().value);
+            /*var a = $$("inputdata").getSelectedItem();
+            console.log(a.type) */
+            $$("filterDatatable").add({
+                optype1: colVal,
+                optype2: uniqueVal
+
+            }, 0);
+        }
+        function remvalue() {
+            if (!$$("outputdata1").getSelectedId()) {
+                webix.message("No item is selected!");
+                return;
+            }
+            var a = $$("filterDatatable").getSelectedItem();
+            var b = a.optype2;
+            console.log(b)
+            $$("filterDatatable").remove($$("outputdata1").getSelectedId());
+            $$("inputdata").add({
+
+                type: b
+
+            }, 0);
+
+        }
+
+        function submitHandler() {
+            window.location.href = "ColumnFilter.html";
+        }
+
+    })
+
+</script>

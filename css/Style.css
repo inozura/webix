@@ -1,0 +1,92 @@
+.mainHeaderCss{
+    text-align: center;
+    font-size: 35px;
+    padding-top: 15px;
+}
+
+.subHeaderCss{
+    text-align: center;
+    font-size: 20px;
+    padding-bottom: 15px;
+}
+
+.formCss
+{
+   padding-top:40px !important;
+   text-align: center !important;
+}
+
+.nameTemplatecss{
+    border: 0 !important;
+}
+
+.noBorderCss{
+    border: 0px !important;
+}
+
+.sub-title {
+    font-size: 20px;
+    text-align: center;
+}
+
+.alignCenter{
+    text-align: center !important;
+}
+
+
+.marginTop {
+    margin-top: -6px !important;
+}
+
+.marginTopAddRemoveBtns{
+    margin-top: 15% !important;
+}
+
+.marginLeftBtns{
+    margin-left: 40% !important;
+}
+
+.marginAddRemoveBtnColFilter{
+    margin-top: 80px !important;
+    margin-left: 102px !important;
+    margin-right: -100px !important;
+}
+
+.marginLeftToolbar{
+    margin-left: 44% !important;
+    margin-top: 38px !important;
+}
+
+.headerCss{
+    background:#ffffff;
+    color:#111111;
+    width:98% !important;
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px; 
+
+}
+
+
+#divCalculation{
+    border-color: black;
+    outline-style:solid;
+    margin-left:30px;
+    margin-top:50px;
+    width:95%;
+    height:500px;
+}
+
+.webix_view {
+    position: relative;
+    width: 900px;
+    height: 286px;
+    margin: 0 auto;
+}
+
+.webix_dtable {
+    position: relative;
+    width: 900px;
+    height: 286px;
+    margin: 0 auto;
+}

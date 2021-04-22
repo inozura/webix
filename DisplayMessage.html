@@ -1,0 +1,39 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css" />
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+</head>
+
+<h2 style="text-align:center ; padding-top:200px;"> Once the calculation is done, an email will be sent to
+    admin@beulahworks.com </h2>
+<h2 style="text-align:center ; padding-top:50px; padding-bottom:50px;"> You may close the browser tab now </h2>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        webix.ui({
+            view: "layout",
+
+            rows: [
+                {
+                    view: "button",
+                    value: "Main Menu",
+                    inputWidth: 200,
+
+                    align: "center",
+                    id: "btnMainMenu"
+                }
+            ]
+        }
+        );
+
+        const btn = $$('btnMainMenu');
+        btn.attachEvent('onItemClick', function () {
+            window.location.href = "ResultSubDataset.html";
+        })
+
+
+    </script>
+</body>
+
+</html>

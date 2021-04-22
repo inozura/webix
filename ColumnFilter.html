@@ -1,0 +1,198 @@
+<!-- All contents included in this file is proprietary to BeulahWorks, LLC. All Rights Reserved. ©BeulahWorks, 2021, BeulahWorks, LLC. -->
+<!-- Distribution of this file is not allowed without BeulahWorks's permission. Contact: Victor Guo <admin@beulahworks.com>-->
+
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <link rel="stylesheet" href="//cdn.webix.com/edge/webix.css" type="text/css" />
+    <script src="//cdn.webix.com/edge/webix.js" type="text/javascript"></script>
+    <script src="./js/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/Style.css" type="text/css">
+
+</head>
+
+<body>
+    <div id='mainHeader' class='mainHeaderCss'>Create Subdata Set</div>
+    <div id='subHeader' class='subHeaderCss'>Step 2: Select Column Filter</div>
+
+
+    <script>
+        let columnsIncludedTitle = "Columns to include";
+        var excludedCol_dataset = ["Doors", "DriveWheels", "Length", "Price", "Width", "Length11", "Price11", "Width11"];
+        var includedCol_dataset = [];
+        var tableSelected = [];
+
+        function renderHtml() {
+            webix.ui({
+                css: "col-md-12",
+                borderless: false,
+                view: "form",
+                id: "colDataset",
+                rows: [
+                    {
+                        cols: [
+                            {
+                                css: "col-md-2",
+                            },
+                            {
+                                view: "label", label: "", css: "col-md-3"
+                            },
+                            {
+                                css: "col-md-2",
+                            },
+                            {
+                                view: "label", label: "Columns to Include", css: "col-md-3"
+                            },
+                            {
+                                css: "col-md-2",
+                            }
+                        ]
+                    },
+                    {
+                        cols: [
+                            {
+                                css: "col-md-2",
+                            },
+                            {
+                                view: "button", label: "Select All->", id: "btnSelectAll", css: "col-md-3"
+                            },
+                            {
+                                css: "col-md-2",
+                            },
+                            {
+                                view: "button", label: "<-Clear All", id: "btnClearAll", css: "col-md-3"
+                            },
+                            {
+                                css: "col-md-2",
+                            }
+                        ]
+                    },
+                    {
+                        cols: [
+                            {
+                                css: "col-md-2",
+                            },
+                            {
+                                view: "list",
+                                select: "multiselect",
+                                id: "dtColNotIncluded",
+                                maxHeight: 250,
+                                css: "col-md-3",
+                                data: excludedCol_dataset,
+                            },
+                            {
+                                view: "toolbar", css: "col-md-2 marginAddRemoveBtnColFilter", borderless: true, width: 267,
+                                rows: [
+                                    {
+                                        view: "button", id: "btnAdd", value: "Button",
+                                        type: "icon", icon: "wxi-angle-double-right", inputWidth: 50, click: includeColumns
+                                    },
+                                    {
+                                        view: "button", id: "btnRemove", value: "Button",
+                                        type: "icon", icon: "wxi-angle-double-left", inputWidth: 50, click: excludeColumns
+                                    }
+                                ]
+                            },
+                            {
+                                view: "list",
+                                select: "multiselect",
+                                id: "dtColIncluded",
+                                maxHeight: 250,
+                                css: "col-md-3",
+                                data: includedCol_dataset,
+                            },
+                            {
+                                css: "col-md-2",
+                            }
+                        ]
+                    },
+                    {
+                        view: "toolbar",
+                        css: "noBorderCss alignCenter marginLeftToolbar",
+                        width: 700,
+                        x: 50,
+                        cols: [
+                            { view: "button", label: "Next", id: "btnNext", autowidth: true, click: nextHandler },
+                            { view: "button", label: "Main Menu", id: "btnMenu", autowidth: true },
+                            {}
+                        ],
+                    }
+                ]
+            })
+        }
+
+        webix.ready(function () {
+            excludedCol_dataset = excludedCol_dataset.sort();
+            checkLocalStorage();
+            renderHtml();
+            $$("btnNext").disable();
+
+        });
+
+        function includeColumns() {
+            var selectedItems = $$("dtColNotIncluded").getSelectedItem();
+            // console.log(selectedItems);
+            if (selectedItems != undefined) {
+                //adding the columns to included column list
+                if (selectedItems.length != undefined) {
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        includedCol_dataset.push(selectedItems[i]);
+                    }
+                }
+                else {
+                    tableSelected.push(selectedItems);
+                    includedCol_dataset.push(selectedItems);
+                }
+
+                $$("dtColIncluded").define("data", includedCol_dataset);
+                $$("dtColIncluded").refresh();
+                $$("btnNext").enable();
+
+                //remove from excluded list
+                $$("dtColNotIncluded").remove($$("dtColNotIncluded").getSelectedId());
+            }
+        }
+
+        function excludeColumns() {
+            var selectedItems = $$("dtColIncluded").getSelectedItem();
+            if (selectedItems != undefined) {
+                //adding the columns to included column list
+                if (selectedItems.length != undefined) {
+                    for (var i = 0; i < selectedItems.length; i++) {
+                        excludedCol_dataset.push(selectedItems[i]);
+                    }
+                }
+                else {
+                    tableSelected.push(selectedItems);
+                    excludedCol_dataset.push(selectedItems);
+                }
+                excludedCol_dataset = excludedCol_dataset.sort();
+
+                $$("dtColNotIncluded").define("data", excludedCol_dataset);
+                $$("dtColNotIncluded").refresh();
+
+                //remove from excluded list
+                $$("dtColIncluded").remove($$("dtColIncluded").getSelectedId());
+            }
+        }
+
+        function checkLocalStorage() {
+            if(window.localStorage.getItem('table') !== undefined) {
+                window.localStorage.clear();
+            }
+        }
+    
+        function nextHandler() {
+            window.localStorage.setItem('table', JSON.stringify(tableSelected));
+
+            window.location.href = "Calculation.html";
+        }
+
+
+    </script>
+
+</body>
+
+</html>

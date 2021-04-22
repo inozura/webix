@@ -1,0 +1,58 @@
+{
+	"tables": [
+		"automotive",
+		"motorcycles",
+		"train"
+	],
+	"variables": [{
+		"name": "BodyStyle",
+		"table": "automotive",
+		"type": "Categorical",
+		"levels": [
+			"convertible",
+			"hardtop",
+			"hatchback",
+			"sedan",
+			"wagon"
+		]
+	}, {
+		"name": "Length",
+		"table": "automotive",
+		"type": "Numerical",
+		"levels": [
+			"141.1",
+			"208.1"
+		]
+	}, {
+		"name": "BodyStyle",
+		"table": "motorcycles",
+		"type": "Categorical",
+		"levels": [
+			"convertible11",
+			"hardtop11",
+			"hatchback11",
+			"sedan11",
+			"wagon11"
+		]
+	}, {
+		"name": "Length",
+		"table": "motorcycles",
+		"type": "Numerical",
+		"levels": [
+			"141.1",
+			"208.1"
+		]
+	},{
+		"name": "Doors",
+		"table": "motorcycles",
+		"type": "Categorical",
+		"levels": [
+			"Wood",
+			"Steel",
+			"Iron"
+		]
+	}
+	]
+}
+
+

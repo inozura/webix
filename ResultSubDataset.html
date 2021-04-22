@@ -1,0 +1,111 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="./css/webix.css" type="text/css" />
+    <script src="./js/webix.js" type="text/javascript"></script>
+    <script src="./js/jquery.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="./css/Style.css" type="text/css">
+
+</head>
+
+<body style="border: 5px solid black; padding: 20px; margin: 5%;">
+    <div class="page-header text-center mt-4 mb-4" style="padding-bottom: 20px;">
+        <h1>Successfully Created Subdata Set new_data1</h1>
+    </div>
+
+    <div style="text-align: center;padding-top: 20px; padding-bottom: 20px;"><button onclick="window.location.href = '/'"> Main Menu </button> </div>
+
+    <script>
+        // Configuration title
+        let selelctTitle = "Select a Dataset";
+        var columnTable = [];
+        let colLopp = [];
+        let colData = [];
+
+        webix.ready(function () {
+            setColumTable();
+            loopColumn();
+            loopData();
+            
+            webix.ui.fullScreen();
+            renderHtml()
+
+            console.log(colData);
+
+            function renderHtml() {
+                var dtable = webix.ui({
+                    view: "datatable",
+                    height: 300,
+                    width: 900,
+                    columns: colLopp,
+                    data: colData
+                });
+
+                webix.ui({
+                    css: "container mt-4",
+                    borderless: false,
+                    rows: [
+                        {
+                            cols: [
+                                {
+                                    view: "form",
+                                    css: "content",
+                                    id: "myform2",
+                                    width: 300,
+                                    height: 800,
+                                    elements: [
+                                        {
+                                            borderless: false,
+                                            view: "list",
+                                            id: "list",
+                                            css: "filter-list",
+                                            width: 200,
+                                            height: 200,
+                                            template: "#title#",
+                                            select: true,
+                                            data: dtable
+                                        },
+                                        {
+                                            view: "button",
+                                            value: "Add",
+                                            width: 100,
+                                            click: addDataFun
+                                        }
+
+                                    ]
+                                },
+                            ]
+                        }
+                    ]
+                })
+
+
+            }
+
+        })
+
+        function setColumTable() {
+            columnTable = JSON.parse(window.localStorage.getItem('table'));
+        }
+
+        function loopColumn() {
+            for(var i = 0; i < columnTable.length; i++) {
+                colLopp.push({ id: columnTable[i].id, header: columnTable[i].value, width: 450 })
+            }
+        }
+
+        function loopData() {
+            for(var j = 0; j < 10; j++) {
+                let data = {id: j};
+                for(var i = 0; i < columnTable.length; i++) {
+                    data[columnTable[i].value] = columnTable[i].value + " " + j;
+                }
+                colData.push(data);
+            }
+        }
+
+    </script>
+</body>
+
+</html>

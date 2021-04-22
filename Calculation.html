@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <link rel="stylesheet" href="http://cdn.webix.com/edge/webix.css" type="text/css" charset="utf-8">
+   <script src="http://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
+   <script src="./js/all.js" type="text/javascript"></script>
+   <script src="./js/jquery.js" type="text/javascript"></script>
+   <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css" />
+   <link rel="stylesheet" href="./css/Style.css" type="text/css">
+   <link rel="stylesheet" href="./css/all.css" type="text/css">
+</head>
+
+<body onload="myFunction()" id="bodyCalculate" style="text-align:center;padding-top: 20px;" >
+   <div id="divCalculation">
+      <br>
+      <h1 style="text-align:center;padding-top: 100px; font-size:80px;">Calculating &nbsp<span
+            class="fas fa-spinner fa-pulse"></span></h1>
+      <h3>
+         <center>Please do not close the window </center>
+      </h3>
+      <br>
+      <center>
+         <div id='MsgDisplay'></div>
+      </center>
+   </div>
+   <script type="text/javascript" charset="utf-8">
+      webix.ui({
+         view: "toolbar",
+         container: "MsgDisplay",
+
+         rows: [
+            {
+               view: "button",
+               value: "Send Me an Email once the Calculation is Finished",
+               autowidth: true,
+               id: "btnDisplay"
+            }
+         ]
+      }
+      );
+     
+
+      const btn = $$('btnDisplay');
+      btn.attachEvent('onItemClick', function () {
+
+         window.location.href = "DisplayMessage.html";
+      })
+
+   </script>
+   <script>
+      function myFunction() {
+         setInterval(function () { window.location.href = "ResultSubDataset.html"; }, 3000);
+      }
+      </script>
+
+</body>
+
+</html>
